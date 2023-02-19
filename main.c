@@ -6,9 +6,10 @@ static unsigned int number_of_exchanges = 0;
 static int min = 0;
 static int max = 0;
 
-void inc(char operation){                            // функция для измерения кол-ва сравнений и обменов
+int inc(char operation){                            // функция для измерения кол-ва сравнений и обменов
     if (operation == '=') number_of_exchanges++;     // будем использовать '=' как обозначение обмена
     if (operation == '>') number_of_comparisons++;   // будем использовать '>' как обозначение обмена
+    return 1;
 }
 
 double absf(double value){                        // модуль для double'ов
@@ -38,14 +39,13 @@ void PartitionSort(double *a, int first, int last){  // реализация с�
     int right = last;
     double pivot = absf(a[(left + right)/2]);        // создаем pivot - эл-т около которого и будем делать partitioning(разбиение)
     do {                                             // наш главный цикл находится именно тут
-        while (absf(a[left]) > pivot) {              // находим эл-т больший pivot'а слева
+        while (inc('>') && absf(a[left]) > pivot) {              // находим эл-т больший pivot'а слева
             left++;
-            inc('>');
         }
-        while (pivot > absf(a[right])){              // находим эл-т меньший  pivot'а справа
+        while (inc('>') &&pivot > absf(a[right])){              // находим эл-т меньший  pivot'а справа
             right--;
-            inc('>');
         }
+        inc('>');
         if (left <= right){                          // если левый индекс <= правого индекса, меняем местами найденные числа
             double tmp = a[left];
             a[left] = a[right];
