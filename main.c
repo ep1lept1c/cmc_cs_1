@@ -42,10 +42,9 @@ void PartitionSort(double *a, int first, int last){  // реализация с�
         while (inc('>') && absf(a[left]) > pivot) {              // находим эл-т больший pivot'а слева
             left++;
         }
-        while (inc('>') &&pivot > absf(a[right])){              // находим эл-т меньший  pivot'а справа
+        while (inc('>') && pivot > absf(a[right])){              // находим эл-т меньший  pivot'а справа
             right--;
         }
-        inc('>');
         if (left <= right){                          // если левый индекс <= правого индекса, меняем местами найденные числа
             double tmp = a[left];
             a[left] = a[right];
