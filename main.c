@@ -146,6 +146,12 @@ int main(void){
             printf("error\n");
             break;
         }
+        randArr(c, n);
+        BubbleSort(c, n);
+        if (!is_sort_is_ok(c, n)){
+            printf("error\n");
+            break;
+        }
     }
     free(a);
     free(b);
