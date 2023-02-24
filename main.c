@@ -16,6 +16,17 @@ double absf(double value){                        // модуль для double'
     return (value > 0) ? value : -value;
 }
 
+int compare(const void *p, const void *q)         // компаратор для встроенной сортировки
+{
+    double l = *(const double *)p;
+    double r = *(const double *)q;
+    if (absf(r) - absf(l) > 0)
+        return 1;
+    if (absf(r) - absf(l) < 0)
+        return -1;
+    return 0;
+}
+
 void BubbleSort(double *a, int n){                // реализация сортировки пузырьком
     int flag = 1;                                 // ставим флаг для оптимизации (если внутренний цикл ничего не делает => остановка)
     for (int i = 0; i < n; i++){
@@ -85,7 +96,16 @@ void reverselineArr(double *a, int n){                   // дополнител
         a[i] = i + 1 + ((double)rand()) / RAND_MAX;
     }
 }
-
+int is_sort_is_ok(double *a, int n){                     // функция для проверки верно ли отсортирован массив
+    double copy[10000] = {0};                            // создаем копию массива
+    for (int i = 0; i < n; i++) copy[i] = a[i];
+    qsort(copy, n, sizeof(double), compare);             // вызываем встроенную сортировку (которой доверяем больше 0_0)
+    for (int i = 0; i < n; i++)
+        if (absf(copy[i]) != absf(a[i])){                // проверяем сошлись ли результаты сортировок (с точностью до модуля)
+            return 0;
+        }
+    return 1;
+}
 int main(void){
     srand((unsigned)time(NULL));
     int n, choice;
@@ -118,5 +138,17 @@ int main(void){
     number_of_exchanges = 0;
     BubbleSort(b, n);
     printf("Bubblesort:\n number of comparisons: %u\n number of exchanges: %u\n", number_of_comparisons, number_of_exchanges);
+    double *c = calloc(n, sizeof(double));
+    for (int i = 0; i < 100; i++){
+        randArr(c, n + i);
+        QuickSort(c, n + i);
+        if (!is_sort_is_ok(c, n + i)){
+            printf("error\n");
+            break;
+        }
+    }
+    free(a);
+    free(b);
+    free(c);
     return 0;
 }
