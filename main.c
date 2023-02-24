@@ -140,9 +140,9 @@ int main(void){
     printf("Bubblesort:\n number of comparisons: %u\n number of exchanges: %u\n", number_of_comparisons, number_of_exchanges);
     double *c = calloc(n, sizeof(double));
     for (int i = 0; i < 100; i++){
-        randArr(c, n + i);
-        QuickSort(c, n + i);
-        if (!is_sort_is_ok(c, n + i)){
+        randArr(c, n);
+        QuickSort(c, n);
+        if (!is_sort_is_ok(c, n)){
             printf("error\n");
             break;
         }
